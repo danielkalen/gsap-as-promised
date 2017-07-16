@@ -1,4 +1,4 @@
-var animate = require('./')
+var animate = require('./dist/gsap-as-promised.js')
 var assert = require('chai').assert;
 
 suite('a Promise wrapper around gsap / tweenlite', function() {

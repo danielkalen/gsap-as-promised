@@ -2,7 +2,8 @@
   "name": "gsap-as-promised",
   "version": "1.0.0",
   "description": "a Promise wrapper around greensock's TweenLite/TweenMax animation library",
-  "main": "index.js",
+  "main": "dist/gsap-as-promised.js",
+  "browser": "src/index.js",
   "license": "MIT",
   "author": {
     "name": "Daniel Kalen",
@@ -10,13 +11,17 @@
     "url": "https://github.com/danielkalen"
   },
   "dependencies": {
-    "gsap": "1.18.2"
+    "greensock": "^1.20.2"
   },
   "devDependencies": {
     "chai": "^4.1.0",
-    "mocha": "^3.4.2"
+    "mocha": "^3.4.2",
+    "simplyimport": "^4.0.0-s12"
   },
   "scripts": {
+    "postversion": "npm run build && git add . && git commit -m '[Build]'",
+    "postpublish": "git push",
+    "build": "simplyimport bundle src/index.js --umd gsap > dist/gsap-as-promised.js",
     "test": "mocha -u tdd --slow 10000 --bail test.js"
   },
   "keywords": [],

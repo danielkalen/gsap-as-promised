@@ -29,7 +29,7 @@ function wrapLib(gsap){
 	return wrapper;
 }
 
-var wrapped = wrapLib(require('gsap/src/minified/TweenLite.min.js'));
+var wrapped = wrapLib(require('greensock/TweenLite'));
 wrapped.wrap = wrapLib;
 
 module.exports = wrapped;
