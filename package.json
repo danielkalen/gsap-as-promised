@@ -1,6 +1,6 @@
 {
   "name": "gsap-as-promised",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a Promise wrapper around greensock's TweenLite/TweenMax animation library",
   "main": "index.js",
   "license": "MIT",
