@@ -1,6 +1,6 @@
 # gsap-as-promised
-[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
-[![NPM](https://img.shields.io/npm/v/smart-extend.svg)](https://npmjs.com/package/smart-extend)
+[![NPM](https://img.shields.io/npm/v/gsap-as-promised.svg)](https://npmjs.com/package/gsap-as-promised)
+[![stable](https://img.shields.io/badge/stability-stable-brightgreen.svg)](http://github.com/badges/stability-badges)
 
 A Promise wrapper around gsap (TweenLite by default, but can wrap any gsap library).
 
