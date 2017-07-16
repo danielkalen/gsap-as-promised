@@ -3,6 +3,8 @@ function wrapLib(gsap){
 		return wrapper.to(a,b,c);
 	}
 
+	wrapper.lib = gsap;
+
 	wrapper.all = function(target){
 		return Promise.all(target)
 	};
