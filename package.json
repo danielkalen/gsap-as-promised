@@ -1,36 +1,31 @@
 {
-  "name": "gsap-promise",
-  "version": "2.0.0",
-  "description": "a Promise wrapper around gsap / tweenlite",
+  "name": "gsap-as-promised",
+  "version": "1.0.0",
+  "description": "a Promise wrapper around greensock's TweenLite/TweenMax animation library",
   "main": "index.js",
   "license": "MIT",
   "author": {
-    "name": "Matt DesLauriers",
-    "email": "dave.des@gmail.com",
-    "url": "https://github.com/mattdesl"
+    "name": "Daniel Kalen",
+    "email": "d@danielkalen.com",
+    "url": "https://github.com/danielkalen"
   },
   "dependencies": {
-    "bluebird": "^3.3.4",
-    "gsap": "1.18.2",
-    "object-assign": "^4.0.1"
+    "gsap": "1.18.2"
   },
   "devDependencies": {
-    "browserify": "^9.0.3",
-    "faucet": "0.0.1",
-    "smokestack": "^3.2.1",
-    "tap-closer": "^1.0.0",
-    "tape": "^3.5.0"
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2"
   },
   "scripts": {
-    "test": "browserify test.js | tap-closer | smokestack | faucet"
+    "test": "mocha -u tdd --slow 10000 --bail test.js"
   },
   "keywords": [],
   "repository": {
     "type": "git",
-    "url": "git://github.com/mattdesl/gsap-promise.git"
+    "url": "git://github.com/danielkalen/gsap-as-promised.git"
   },
-  "homepage": "https://github.com/mattdesl/gsap-promise",
+  "homepage": "https://github.com/danielkalen/gsap-as-promised",
   "bugs": {
-    "url": "https://github.com/mattdesl/gsap-promise/issues"
+    "url": "https://github.com/danielkalen/gsap-as-promised/issues"
   }
 }

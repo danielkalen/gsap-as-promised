@@ -1,96 +1,102 @@
 var animate = require('./')
-var test = require('tape').test
+var assert = require('chai').assert;
 
-test('a Promise wrapper around gsap / twenelite', function(t) {
-	t.test('Basic tests', function(st){
-		st.plan(4)
-
-		st.equal(animate, animate.to, 'animate equals animate.to')
-
-		var a = { value: 0 }
-		animate.to(a, 0.5, {
-			value: 1.0
-		}).then(function() {
-			st.equal(a.value, 1, 'animate.to works')
-		})
-
-		var b = { value: 5 }
-		animate.set(b, { delay: 0.5, value: 10 }).then(function() {
-			st.equal(b.value, 10, 'animate.set with delay works')
-		})
-
-		var c = { value: 10 }
-		animate.fromTo(c, 1.0, { value: 0 }, { value: 5 }).then(function() {
-			st.equal(c.value, 5, 'animate.fromTo works')
-		})
+suite('a Promise wrapper around gsap / tweenlite', function() {
+	test('animate', function(){
+		var target = { value: 0 };
+		
+		return Promise.resolve()
+			.then(function(){
+				return animate(target, 0.5, {value: 1.0})
+			})
+			.then(function(){
+				assert.equal(target.value, 1, 'animate() works');
+			})
 	});
-
-	t.test('From to tests', function(st){
-		st.plan(1);
-
-		var d = {value: 0};
-		var promise = animate
-			.fromTo(d, 1, { value: 0 }, { value: 100 })
-			.finally(function () {
-				st.assert(d.value < 100, 'fromTo cancelling works')
-			});
-
-		setTimeout(function(){
-			promise.cancel()
-		}, 200);
+	
+	test('animate.to', function(){
+		var target = { value: 0 };
+		
+		return Promise.resolve()
+			.then(function(){
+				return animate.to(target, 0.5, {value: 1.0})
+			})
+			.then(function(){
+				assert.equal(target.value, 1, 'animate.to() works');
+			})
 	});
-
-	t.test('StaggerFrom tests', function(st){
-		st.plan(1);
-
-		var e = [{value: 100}, {value: 100}, {value: 100}]
-		var promise = animate
-			.staggerFrom(e, 1, { value: 0 }, 0.1)
-			.finally(function () {
-				st.assert(e.slice(-1)[0].value < 100, 'staggerFrom cancelling works')
-			});
-
-		setTimeout(function(){
-			promise.cancel()
-		}, 200);
+	
+	test('animate.set', function(){
+		var target = { value: 5 };
+		
+		return Promise.resolve()
+			.then(function(){
+				return animate.set(target, {delay: 0.5, value: 10})
+			})
+			.then(function(){
+				assert.equal(target.value, 10, 'animate.set() works');
+			})
 	});
-
-	t.test('Stagger FromTo tests', function(st){
-		st.plan(1);
-
-		var e = [{value: 100}, {value: 100}, {value: 100}]
-		var promise = animate
-			.staggerFromTo(e, 1, { value: 0 }, { value: 100 }, 0.1)
-			.finally(function () {
-				st.assert(e.slice(-1)[0].value < 100, 'staggerFromTo cancelling works')
-			});
-
-		setTimeout(function(){
-			promise.cancel()
-		}, 200);
+	
+	test('animate.from', function(){
+		var target = { value: 10 };
+		
+		return Promise.resolve()
+			.then(function(){
+				setTimeout(function(){
+					assert.isBelow(target.value, 10);
+					assert.isAtLeast(target.value, 5);
+				}, 200);
+			})
+			.then(function(){
+				return animate.from(target, 0.5, {value: 5});
+			})
+			.then(function(){
+				assert.equal(target.value, 10, 'animate.from() works');
+			})
 	});
+	
+	test('animate.fromTo', function(){
+		var target = { value: 0 };
+		
+		return Promise.resolve()
+			.then(function(){
+				setTimeout(function(){
+					assert.isBelow(target.value, 100);
+					assert.isAtLeast(target.value, 50);
+				}, 25);
+			})
+			.then(function(){
+				return animate.fromTo(target, 0.5, {value: 50}, {value: 100})
+			})
+			.then(function(){
+				assert.equal(target.value, 100, 'animate.fromTo() works');
+			})
+	});
+	
 
-	t.test('Promise all', function(st){
-		st.plan(1);
 
+	test('Promise all', function(){
+		var _this = this;
 		var f = [{value: 0}, {value: 0}, {value: 0}, {value: 0}, {value: 0}, {value: 0}];
 		var to = {value: 100};
 		var timeout = setTimeout(function () {
-			st.fail('not all promises resolved, are arguments being mutated?')
+			throw new Error('not all promises resolved, are arguments being mutated?');
 		}, 800)
-		Promise.all([
-			animate.set(f[0], to),
-			animate.set(f[1], to),
-			animate.to(f[2], 0.5, to),
-			animate.to(f[3], 0.5, to),
-			animate.fromTo(f[4], 0.5, {value: 0}, to),
-			animate.fromTo(f[5], 0.5, {value: 0}, to)
+		
+		return animate.all([
+			a=animate.set(f[0], {value: 100}),
+			b=animate.set(f[1], {value: 100}),
+			c=animate.to(f[2], 0.5, {value: 100}),
+			d=animate.to(f[3], 0.5, {value: 100}),
+			e=animate.fromTo(f[4], 0.5, {value: 0}, {value: 100}),
+			ff=animate.fromTo(f[5], 0.5, {value: 0}, {value: 100})
 		]).then(function () {
 			clearTimeout(timeout)
 
-			st.assert(f.every(function (item) {
+			assert(f.every(function (item) {
 				return item.value === to.value
 			}), 'all promises resolved')
 		})
-	});
-})
+	})
+});
