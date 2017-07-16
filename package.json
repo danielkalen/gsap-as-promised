@@ -19,7 +19,7 @@
     "simplyimport": "^4.0.0-s12"
   },
   "scripts": {
-    "postversion": "npm run build && sleep 0.2 && git add . && git commit -m '[Build]'",
+    "postversion": "npm run build && sleep 0.2 && git add .; git commit -m '[Build]' || true",
     "postpublish": "git push",
     "build": "simplyimport bundle src/index.js --umd gsap > dist/gsap-as-promised.js",
     "test": "mocha -u tdd --slow 10000 --bail test.js"
